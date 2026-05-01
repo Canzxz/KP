@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Toko Bangunan Hadi - POS Terminal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen font-display">
+<div class="flex h-screen overflow-hidden">
+<!-- Main Content Area (Left) -->
+<main class="flex-1 flex flex-col min-w-0 overflow-hidden">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between px-8 py-4 border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-background-dark/50 backdrop-blur-md z-10">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<div class="size-10 bg-primary rounded-lg flex items-center justify-center text-white shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">construction</span>
+</div>
+<div>
+<h1 class="text-xl font-bold tracking-tight">Toko Bangunan Hadi</h1>
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Register #01 • Terminal Active</p>
+</div>
+</div>
+<div class="h-8 w-[1px] bg-slate-200 dark:border-slate-800"></div>
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full pl-10 pr-4 py-2.5 rounded-xl border-none bg-slate-100 dark:bg-slate-800/50 text-sm focus:ring-2 focus:ring-primary transition-all placeholder:text-slate-400" placeholder="Search products or scan barcode..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-500">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-500">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden border border-slate-300 dark:border-slate-600">
+<img alt="Avatar" data-alt="Professional store manager profile photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJvJLtbSPimRTutrpfd7TZAhnCxvgzpxW-Sb1NhcHJ48SNOZmAt2U-DMHFjCtF2g2ZSGYoD3mr4gt5xqNJ6QQWvtq4BP-4TKzM71wlFtHiXLKirfXGDlYn89DZY339rlbZC71QB1QN4kRtNPciTNS9wYk1tEtlCFQ1XDE--EPtvFdcndz2XfsBVnNY57e4hZOcOOxJmPzK182ZVxdJXCofPgYPvDCMLn92GBCpDrgdkb1MxFdfC2PLK2XogjgZH3jFUya6WKciLT01"/>
+</div>
+</div>
+</header>
+<!-- Product Grid -->
+<div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+<div class="flex items-center justify-between mb-8">
+<div class="flex gap-2">
+<button class="px-5 py-2 rounded-full bg-primary text-white text-sm font-semibold shadow-md">All Items</button>
+<button class="px-5 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">Tools</button>
+<button class="px-5 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">Plumbing</button>
+<button class="px-5 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">Electrical</button>
+<button class="px-5 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">Safety</button>
+</div>
+<p class="text-sm text-slate-400">Showing 124 products</p>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
+<!-- Product Card -->
+<div class="group relative flex flex-col bg-white dark:bg-slate-800/40 rounded-2xl p-3 border border-slate-200 dark:border-slate-800/50 hover:shadow-2xl hover:shadow-primary/5 transition-all cursor-pointer">
+<div class="aspect-square w-full rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 mb-4">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Close up of high quality gray cement bag" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmbp59CBso6X-FOGvt74AC1QBsi_jAb2aN0OJMSM0Hv1yZA4ONUS7hhRPGXiHFSHfQU95ZJvwfLcAP78dWRPIPDEiY7a47ascYIrZzl9eAqdmaj41TGsZrTrMuvEvb_W8eWwcRNzlXl5edq6W0BWDl-OXKFuj8TVH9zFRnfcDp5cMWHkWLZK-FoRT-fjJVFT1SIx_b-cx4a7rXZ-V-5OeIvQpE1LJ8EgMiUmegy7m3IUNptafE4wZQSZQOrELTLNdOsxowDv7BRwMm"/>
+</div>
+<h3 class="font-semibold text-sm mb-1 line-clamp-1">Premium Cement 50kg</h3>
+<p class="text-xs text-slate-400 mb-3">Holcim Master Grade</p>
+<div class="flex items-center justify-between mt-auto">
+<span class="font-bold text-primary">$12.50</span>
+<div class="size-8 rounded-lg bg-slate-100 dark:bg-slate-700 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</div>
+</div>
+</div>
+<div class="group relative flex flex-col bg-white dark:bg-slate-800/40 rounded-2xl p-3 border border-slate-200 dark:border-slate-800/50 hover:shadow-2xl hover:shadow-primary/5 transition-all cursor-pointer">
+<div class="aspect-square w-full rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 mb-4">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Heavy duty claw hammer with rubber grip" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4KN_3tyhUUC4plpQAF2piO8pH5X6wdePdyjMpvfRG0TRNRi7EkIzEKsZi2Ek-L5vdQkb23udL9ZO7AzsBAm4sSh1DmrqgdkFJmnBO_PJjNba1meY59hpV6co3HNoBWny5XTuXeOGT-4xnbC_o8YMvhY1zeD9-F328ue15G4xDIYMjOpzMosJaKDVBzIsxCzR406heCEF_nJMzg6jF41FdrKt3zKrSlw0b2O-yRKrxCYWEXyAWxFiRn48C39QpNeQAWQ42fhUb5M4P"/>
+</div>
+<h3 class="font-semibold text-sm mb-1 line-clamp-1">Pro-Series Claw Hammer</h3>
+<p class="text-xs text-slate-400 mb-3">Steel Forged 16oz</p>
+<div class="flex items-center justify-between mt-auto">
+<span class="font-bold text-primary">$24.99</span>
+<div class="size-8 rounded-lg bg-slate-100 dark:bg-slate-700 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</div>
+</div>
+</div>
+<div class="group relative flex flex-col bg-white dark:bg-slate-800/40 rounded-2xl p-3 border border-slate-200 dark:border-slate-800/50 hover:shadow-2xl hover:shadow-primary/5 transition-all cursor-pointer">
+<div class="aspect-square w-full rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 mb-4">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Stack of clean white ceramic floor tiles" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD91YGFL7y-E920JMLdsq9arCQ_VJm8oQXWeXgJVls3h1gv6xVPxBrN4MB3gOIP9zfQlVE9pw-hpjiywRpnevrEyU5qD-Ic80qjVsw4FWW1iGBZ2k5zkqeyLHWel_fAHByoOfQKZ4FBmYtOY9Ki38OP0HDUnjQ3gfgHwfJ1XoPMZ3jsGgpWB1jTFfaWgSER7gkS0qzm3f6ex2U7QpYXON5cDTT131UDc_hOWCXjSa82E9qYScLk003zsTsCJPwfTuxSoMTHCQpOEdzr"/>
+</div>
+<h3 class="font-semibold text-sm mb-1 line-clamp-1">Ceramic Floor Tile (Box)</h3>
+<p class="text-xs text-slate-400 mb-3">Matte Finish 40x40</p>
+<div class="flex items-center justify-between mt-auto">
+<span class="font-bold text-primary">$45.00</span>
+<div class="size-8 rounded-lg bg-slate-100 dark:bg-slate-700 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</div>
+</div>
+</div>
+<div class="group relative flex flex-col bg-white dark:bg-slate-800/40 rounded-2xl p-3 border border-slate-200 dark:border-slate-800/50 hover:shadow-2xl hover:shadow-primary/5 transition-all cursor-pointer">
+<div class="aspect-square w-full rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 mb-4">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Industrial style indoor lighting fixture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeIXhz_LbnILw7MzCzP2PRT2b6n1A5kIXFxs8a-5IirvG3RyePD1sfK0RjyVVPiccVCyI5plDEGOeAD3VEKIpvx260XUbdzr0lYIJ4Qf4FYfhMMyXsIn4fXMCkf62xM7DzZGlTIQr4hmsZHQa7Xu3xC3bWRT6wIcTpBvUu4BBkbzSxcqV5Eb1LdZXIO3HOebzBZLR-vCPydEPLeuEE3M_XnJJImrMVR5ur9zSIUESQqKc9zQ3b9uN62I2YwCbYX47ITzNnODwco6ia"/>
+</div>
+<h3 class="font-semibold text-sm mb-1 line-clamp-1">LED Workshop Light</h3>
+<p class="text-xs text-slate-400 mb-3">5000 Lumens / Cool Day</p>
+<div class="flex items-center justify-between mt-auto">
+<span class="font-bold text-primary">$32.00</span>
+<div class="size-8 rounded-lg bg-slate-100 dark:bg-slate-700 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</div>
+</div>
+</div>
+<div class="group relative flex flex-col bg-white dark:bg-slate-800/40 rounded-2xl p-3 border border-slate-200 dark:border-slate-800/50 hover:shadow-2xl hover:shadow-primary/5 transition-all cursor-pointer">
+<div class="aspect-square w-full rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 mb-4">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Various steel pipes and plumbing fixtures" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXJKZwNPxs3IgaoKR-DKJ-f2OXILkAj0OFYwBtQcL6TBKYN8Vy3NEn_1y2n2uEuUY8D6zhtVhe9su3lFxyFqgqlfZOAUiESMdc3sFycvqAIu1Px-vL0ZbAKfoqP58Gud6jnxhmSyW3Ysl9pDBSC0Tqu1seiQKqq4rS1JV-03tQDpAgZeWlAGs-FCHUMa2aNyVKypVIMsbTnMIs66EltJmqhnGy5D39sPSqAWe4Np12yeAOmQg57mbtOsuD9x2EZzD9WpYtWA4rdwdm"/>
+</div>
+<h3 class="font-semibold text-sm mb-1 line-clamp-1">PVC Pipe Connector</h3>
+<p class="text-xs text-slate-400 mb-3">3/4 Inch Elbow Joint</p>
+<div class="flex items-center justify-between mt-auto">
+<span class="font-bold text-primary">$1.75</span>
+<div class="size-8 rounded-lg bg-slate-100 dark:bg-slate-700 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Checkout Pane (Right) -->
+<aside class="w-[420px] bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 flex flex-col">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between mb-2">
+<h2 class="text-xl font-bold">Current Cart</h2>
+<span class="px-2 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-[10px] font-bold uppercase tracking-wider">3 Items</span>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-xl bg-primary/5 border border-primary/10">
+<span class="material-symbols-outlined text-primary">person</span>
+<div class="flex-1">
+<p class="text-xs font-semibold">Walk-in Customer</p>
+<p class="text-[10px] text-slate-500">Regular Tier • 0 Points</p>
+</div>
+<button class="text-primary text-xs font-bold hover:underline">Change</button>
+</div>
+</div>
+<!-- Cart Items -->
+<div class="flex-1 overflow-y-auto p-6 space-y-4">
+<div class="flex gap-4 items-center">
+<div class="size-16 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Cement bag thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJs3BlUGx8NhViU9ZSJ-9HV-r_Prod_W_u1630GR6qOXOXibh5JV7fHPwY8xzzSeQRlStdaIM6m8jAMHcBLlnQjx5RLWAyPCNXmXhZrc9PPR760vthKFobjvpgHOZOhhAxI1GPlN_54HnNNxIi7AN0Xc_kktaC3wXJjWUMSYbNm-OPKJPA3sDS-oEdzVSz8MXmzXbeszZ1rUQON1UGSwz9I7jgVbBjHRHJEFEzqutT6fLB2enlYhHkdzLre7gcMH1_p1B03Y-weF15"/>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="text-sm font-semibold truncate">Premium Cement 50kg</h4>
+<p class="text-xs text-slate-500">$12.50 / unit</p>
+<div class="flex items-center gap-3 mt-2">
+<button class="size-6 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500">-</button>
+<span class="text-sm font-medium">4</span>
+<button class="size-6 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500">+</button>
+</div>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold">$50.00</p>
+</div>
+</div>
+<div class="flex gap-4 items-center">
+<div class="size-16 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Hammer thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQjX1LtD7cYGpwGlZk6LsIc62h7HLuZavIw5zgqSg1fMeBwYQB3sV9jdvlRkQikhd_vayFL5aluEiwU0PEJrNCX-uas3ADkwkZOWoshu-wX6C8i0ldFHiElb4-jm4MAQFeLiTe4GwsT1iYwuecYPo2pTA_lfzyc6tO7zeRXwyA5BPJFXHt3OW3eb4G-MWkJoJa8X4nU-HJL4wT3Lcn0spq7dKpyy-vauOyHA93UgNTxwdNlAZB589XqN9Ij1M0d9dMppDamPs2AiGp"/>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="text-sm font-semibold truncate">Pro-Series Claw Hammer</h4>
+<p class="text-xs text-slate-500">$24.99 / unit</p>
+<div class="flex items-center gap-3 mt-2">
+<button class="size-6 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500">-</button>
+<span class="text-sm font-medium">1</span>
+<button class="size-6 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500">+</button>
+</div>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold">$24.99</p>
+</div>
+</div>
+<div class="flex gap-4 items-center">
+<div class="size-16 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="LED light thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADWpwm6MvM0GjKq3A8vr00yeJQeCARgbazWishWYb8XG_3DfR387-Bj5mmP8yGQngjZzcx13oc65nUEXMX9y_rKlIes5mVcZ33flnLMEiX4_uVPAN4LtuD3w-RXr6YP0mS_lo6YNC6ePnTZqC63dDoieEgXvglQS_uyV5eYv9byv2nCzstvpjIr_RMIJgrmPijGMmAXsSTmOcvXiLdK8bNuy5cgzIuUzH3twhs-SLTYJf5pvKzb9cd255OmdXaAiOwMKhk2pEJYwNB"/>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="text-sm font-semibold truncate">LED Workshop Light</h4>
+<p class="text-xs text-slate-500">$32.00 / unit</p>
+<div class="flex items-center gap-3 mt-2">
+<button class="size-6 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500">-</button>
+<span class="text-sm font-medium">2</span>
+<button class="size-6 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500">+</button>
+</div>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold">$64.00</p>
+</div>
+</div>
+</div>
+<!-- Footer / Payment Section -->
+<div class="p-6 bg-slate-50 dark:bg-slate-800/20 border-t border-slate-200 dark:border-slate-800">
+<div class="glass-effect p-6 rounded-2xl mb-6">
+<div class="space-y-3">
+<div class="flex justify-between text-sm">
+<span class="text-slate-500">Subtotal</span>
+<span class="font-medium">$138.99</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-slate-500">Tax (10%)</span>
+<span class="font-medium">$13.90</span>
+</div>
+<div class="h-[1px] bg-slate-200 dark:bg-slate-700 my-2"></div>
+<div class="flex justify-between items-end">
+<span class="text-lg font-bold">Total</span>
+<span class="text-3xl font-black text-primary">$152.89</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3 mb-4">
+<button class="flex flex-col items-center justify-center p-3 rounded-xl border-2 border-primary bg-primary/10 text-primary transition-all">
+<span class="material-symbols-outlined mb-1">payments</span>
+<span class="text-xs font-bold uppercase tracking-wide">Cash</span>
+</button>
+<button class="flex flex-col items-center justify-center p-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 hover:border-primary/50 text-slate-500 transition-all">
+<span class="material-symbols-outlined mb-1">credit_card</span>
+<span class="text-xs font-bold uppercase tracking-wide">Card</span>
+</button>
+</div>
+<button class="w-full py-5 rounded-2xl bg-gradient-to-r from-primary to-[#3a82f6] text-white font-bold text-lg shadow-xl shadow-primary/30 hover:shadow-primary/40 active:scale-[0.98] transition-all flex items-center justify-center gap-3">
+<span>Complete Transaction</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="w-full mt-4 text-slate-400 text-xs font-medium py-2 hover:text-slate-600 dark:hover:text-slate-300">
+                    Cancel &amp; Clear Order
+                </button>
+</div>
+</aside>
+</div>
+</body></html>

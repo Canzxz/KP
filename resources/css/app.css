@@ -1,0 +1,817 @@
+/*
+ * Premium Dark Theme — Toko Bangunan Hadi
+ * =========================================
+ */
+
+/* ───────── Custom Properties ───────── */
+:root {
+    --premium-primary: #1152d4;
+    --premium-primary-dark: #0a368c;
+    --premium-bg-dark: #101622;
+    --premium-bg-card: rgba(255, 255, 255, 0.03);
+    --premium-border: rgba(255, 255, 255, 0.05);
+}
+
+/* ───────── Page Transition Animation ───────── */
+@keyframes pageFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Main content area */
+.fi-main {
+    animation: pageFadeIn 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) both !important;
+}
+
+/* Staggered widget/card entrance */
+.fi-wi {
+    animation: pageFadeIn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both !important;
+}
+.fi-wi:nth-child(1) { animation-delay: 0.05s !important; }
+.fi-wi:nth-child(2) { animation-delay: 0.12s !important; }
+.fi-wi:nth-child(3) { animation-delay: 0.19s !important; }
+.fi-wi:nth-child(4) { animation-delay: 0.26s !important; }
+.fi-wi:nth-child(5) { animation-delay: 0.33s !important; }
+
+/* Table rows entrance */
+.fi-ta-row {
+    animation: pageFadeIn 0.35s ease both !important;
+}
+.fi-ta-row:nth-child(1) { animation-delay: 0.03s !important; }
+.fi-ta-row:nth-child(2) { animation-delay: 0.06s !important; }
+.fi-ta-row:nth-child(3) { animation-delay: 0.09s !important; }
+.fi-ta-row:nth-child(4) { animation-delay: 0.12s !important; }
+.fi-ta-row:nth-child(5) { animation-delay: 0.15s !important; }
+
+/* ───────── Glassmorphism Utilities ───────── */
+.glass-card {
+    background: var(--premium-bg-card);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--premium-border);
+    border-radius: 1.5rem;
+}
+
+.glass-sidebar {
+    background: linear-gradient(135deg, rgba(17, 82, 212, 0.15) 0%, rgba(16, 22, 34, 0.4) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--premium-border);
+}
+
+.premium-gradient {
+    background: linear-gradient(135deg, #1152d4 0%, #0a368c 100%);
+}
+
+/* ───────── Force Dark Mode ───────── */
+.fi-body {
+    background-color: var(--premium-bg-dark) !important;
+}
+
+/* ───────── Sidebar ───────── */
+.fi-sidebar {
+    background: linear-gradient(135deg, rgba(17, 82, 212, 0.10) 0%, rgba(16, 22, 34, 0.95) 100%) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.fi-sidebar-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.fi-sidebar-nav-groups {
+    padding: 0.5rem !important;
+}
+
+/* Active nav item */
+.fi-sidebar-item-active {
+    background: var(--premium-primary) !important;
+    border-radius: 0.75rem !important;
+    box-shadow: 0 4px 15px rgba(17, 82, 212, 0.3) !important;
+}
+
+.fi-sidebar-item-active .fi-sidebar-item-label,
+.fi-sidebar-item-active .fi-sidebar-item-icon {
+    color: white !important;
+}
+
+/* Inactive nav items */
+.fi-sidebar-item:not(.fi-sidebar-item-active) {
+    border-radius: 0.75rem !important;
+    transition: all 0.2s ease !important;
+}
+
+.fi-sidebar-item:not(.fi-sidebar-item-active):hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.fi-sidebar-item:not(.fi-sidebar-item-active) .fi-sidebar-item-label {
+    color: rgb(148, 163, 184) !important;
+}
+
+.fi-sidebar-item:not(.fi-sidebar-item-active) .fi-sidebar-item-icon {
+    color: rgb(148, 163, 184) !important;
+}
+
+/* Nav group labels */
+.fi-sidebar-group-label {
+    font-size: 0.625rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    color: rgb(100, 116, 139) !important;
+    font-weight: 700 !important;
+}
+
+/* ───────── Top Bar / Header ───────── */
+.fi-topbar {
+    background: rgba(16, 22, 34, 0.80) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+/* ───────── Main Content Area ───────── */
+.fi-main {
+    background-color: var(--premium-bg-dark) !important;
+}
+
+/* ───────── Dashboard page — content gets no card wrapper ───────── */
+.fi-page .fi-page-content > .fi-section {
+    background: transparent !important;
+    border: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+.fi-page .fi-page-content > .fi-section > .fi-section-content-ctn {
+    padding: 0 !important;
+}
+
+/* ───────── Cards / Sections ───────── */
+.fi-section,
+.fi-wi-stats-overview-stat {
+    background: var(--premium-bg-card) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border: 1px solid var(--premium-border) !important;
+    border-radius: 1.5rem !important;
+}
+
+/* ───────── Stat Widgets ───────── */
+.fi-wi-stats-overview-stat {
+    transition: all 0.2s ease !important;
+}
+
+.fi-wi-stats-overview-stat:hover {
+    border-color: rgba(17, 82, 212, 0.3) !important;
+}
+
+/* ───────── Tables ───────── */
+.fi-ta-table {
+    background: transparent !important;
+}
+
+.fi-ta-row {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.fi-ta-row:hover {
+    background: rgba(255, 255, 255, 0.02) !important;
+}
+
+.fi-ta-header-cell {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: rgb(148, 163, 184) !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    font-size: 0.7rem !important;
+    letter-spacing: 0.05em !important;
+}
+
+/* ───────── Forms ───────── */
+.fi-input-wrp {
+    border-radius: 0.75rem !important;
+}
+
+/* ───────── Buttons ───────── */
+.fi-btn-primary {
+    background: linear-gradient(135deg, #1152d4 0%, #3a82f6 100%) !important;
+    box-shadow: 0 4px 15px rgba(17, 82, 212, 0.3) !important;
+    border-radius: 0.75rem !important;
+    transition: all 0.2s ease !important;
+}
+
+.fi-btn-primary:hover {
+    box-shadow: 0 6px 20px rgba(17, 82, 212, 0.4) !important;
+    transform: translateY(-1px);
+}
+
+/* ───────── Chart Widget ───────── */
+.fi-wi-chart {
+    background: var(--premium-bg-card) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid var(--premium-border) !important;
+    border-radius: 1.5rem !important;
+}
+
+/* ───────── Login Page — Premium ───────── */
+.fi-simple-layout {
+    background: var(--premium-bg-dark) !important;
+    background-image: url('/images/login-bg.png') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    position: relative !important;
+}
+
+.fi-simple-layout::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(16, 22, 34, 0.92) 0%,
+        rgba(17, 82, 212, 0.15) 50%,
+        rgba(16, 22, 34, 0.95) 100%
+    );
+    z-index: 0;
+}
+
+.fi-simple-layout > * {
+    position: relative;
+    z-index: 1;
+}
+
+.fi-simple-main-ctn {
+    background: transparent !important;
+}
+
+/* Login card — enhanced glassmorphism */
+.fi-simple-page {
+    background: rgba(30, 36, 51, 0.85) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 1.5rem !important;
+    box-shadow:
+        0 0 0 1px rgba(17, 82, 212, 0.1),
+        0 25px 60px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(17, 82, 212, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+    animation: loginCardAppear 0.6s ease-out !important;
+    padding: 2rem !important;
+}
+
+@keyframes loginCardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Brand logo in login */
+.fi-simple-page .fi-logo {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.fi-simple-page .fi-logo img {
+    height: 3.5rem !important;
+    width: auto !important;
+    filter: drop-shadow(0 4px 12px rgba(17, 82, 212, 0.4)) !important;
+    margin-bottom: 0.75rem !important;
+    animation: logoPulse 3s ease-in-out infinite !important;
+}
+
+@keyframes logoPulse {
+    0%, 100% { filter: drop-shadow(0 4px 12px rgba(17, 82, 212, 0.4)); }
+    50% { filter: drop-shadow(0 4px 20px rgba(17, 82, 212, 0.6)); }
+}
+
+/* Login header text */
+.fi-simple-header {
+    text-align: center !important;
+}
+
+.fi-simple-header h1, .fi-simple-header .fi-header-heading {
+    font-size: 1.5rem !important;
+    font-weight: 800 !important;
+    background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    letter-spacing: -0.025em !important;
+}
+
+/* Login form inputs */
+.fi-simple-page .fi-input-wrp {
+    border-radius: 0.75rem !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    transition: all 0.3s ease !important;
+}
+
+.fi-simple-page .fi-input-wrp:focus-within {
+    border-color: rgba(17, 82, 212, 0.5) !important;
+    box-shadow: 0 0 0 3px rgba(17, 82, 212, 0.15),
+                0 0 20px rgba(17, 82, 212, 0.1) !important;
+}
+
+/* Login button */
+.fi-simple-page .fi-btn {
+    background: linear-gradient(135deg, #1152d4 0%, #3a82f6 100%) !important;
+    box-shadow: 0 4px 20px rgba(17, 82, 212, 0.4) !important;
+    border-radius: 0.75rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.025em !important;
+    transition: all 0.3s ease !important;
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+}
+
+.fi-simple-page .fi-btn:hover {
+    box-shadow: 0 6px 30px rgba(17, 82, 212, 0.5) !important;
+    transform: translateY(-2px) !important;
+}
+
+.fi-simple-page .fi-btn:active {
+    transform: translateY(0) scale(0.98) !important;
+}
+
+/* Outer container subtle glow */
+.fi-simple-main-ctn > div {
+    position: relative;
+}
+
+.fi-simple-main-ctn > div::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg, rgba(17, 82, 212, 0.2), transparent, rgba(17, 82, 212, 0.1));
+    border-radius: 1.6rem;
+    z-index: -1;
+    opacity: 0.5;
+    filter: blur(1px);
+}
+
+/* ───────── Badges ───────── */
+.fi-badge {
+    border-radius: 9999px !important;
+    font-weight: 700 !important;
+}
+
+/* ───────── Widget wrapper ───────── */
+.fi-wi {
+    border-radius: 1.5rem !important;
+}
+
+/* ───────── Modal ───────── */
+.fi-modal-content {
+    background: #1e2433 !important;
+    border: 1px solid var(--premium-border) !important;
+    border-radius: 1.5rem !important;
+}
+
+/* ───────── Hero Banner (Dashboard) ───────── */
+.hero-banner {
+    background: linear-gradient(135deg, #1152d4 0%, #0a368c 100%);
+    border-radius: 1.5rem;
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(17, 82, 212, 0.2);
+    margin-bottom: 2rem;
+}
+
+.hero-banner::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 50%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.hero-banner h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: white;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin-bottom: 0.75rem;
+}
+
+.hero-banner p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+.hero-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    backdrop-filter: blur(4px);
+}
+
+/* ───────── Dashboard Stat Cards ───────── */
+.stat-card {
+    background: var(--premium-bg-card);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--premium-border);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    transition: all 0.2s ease;
+}
+
+.stat-card:hover {
+    border-color: rgba(17, 82, 212, 0.3);
+}
+
+.stat-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.stat-icon.orange { background: rgba(249, 115, 22, 0.1); color: #f97316; }
+.stat-icon.blue   { background: rgba(17, 82, 212, 0.1); color: #1152d4; }
+.stat-icon.green  { background: rgba(34, 197, 94, 0.1); color: #22c55e; }
+
+.stat-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.stat-badge.up   { background: rgba(34, 197, 94, 0.1); color: #22c55e; }
+.stat-badge.down { background: rgba(249, 115, 22, 0.1); color: #f97316; }
+
+.stat-value {
+    font-size: 1.875rem;
+    font-weight: 900;
+    letter-spacing: -0.025em;
+}
+
+.stat-label {
+    color: rgb(100, 116, 139);
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+.stat-sublabel {
+    color: rgb(100, 116, 139);
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+/* ───────── Recent Sales & Inventory ───────── */
+.recent-sale-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+}
+
+.recent-sale-item + .recent-sale-item {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sale-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    background: #1e2433;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--premium-primary);
+    font-weight: 700;
+    font-size: 0.75rem;
+}
+
+.inventory-bar {
+    height: 0.5rem;
+    width: 100%;
+    background: #1e2433;
+    border-radius: 9999px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+}
+
+.inventory-bar-fill {
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 0.5s ease;
+}
+
+.inventory-bar-fill.critical { background: #ef4444; }
+.inventory-bar-fill.low      { background: #f97316; }
+.inventory-bar-fill.good     { background: #22c55e; }
+
+/* ───────── Stok Card Premium ───────── */
+.stok-card-premium {
+    background: var(--premium-bg-card);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--premium-border);
+    border-radius: 1rem;
+    padding: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.stok-card-premium:hover {
+    border-color: rgba(17, 82, 212, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.stok-card-premium .stok-img {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background: #1e2433;
+    margin-bottom: 0.75rem;
+}
+
+.stok-card-premium .stok-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.stok-card-premium:hover .stok-img img {
+    transform: scale(1.05);
+}
+
+.stok-status-badge {
+    display: inline-block;
+    padding: 0.125rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.stok-status-badge.habis    { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+.stok-status-badge.menipis  { background: rgba(249, 115, 22, 0.15); color: #f97316; }
+.stok-status-badge.aman     { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
+
+/* ───────── Struk Premium ───────── */
+.struk-premium {
+    max-width: 400px;
+    margin: 2rem auto;
+    background: #1e2433;
+    border: 1px solid var(--premium-border);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    color: #e2e8f0;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+}
+
+.struk-premium .struk-header {
+    text-align: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+    margin-bottom: 1rem;
+}
+
+.struk-premium .struk-header h2 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 0.25rem;
+}
+
+.struk-premium .struk-header p {
+    color: rgb(148, 163, 184);
+    font-size: 0.75rem;
+}
+
+.struk-premium .struk-meta {
+    font-size: 0.75rem;
+    color: rgb(148, 163, 184);
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+    margin-bottom: 1rem;
+}
+
+.struk-premium .struk-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    font-size: 0.8125rem;
+}
+
+.struk-premium .struk-item + .struk-item {
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.struk-premium .struk-total-section {
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    margin-top: 1rem;
+    padding-top: 1rem;
+}
+
+.struk-premium .struk-total-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.25rem 0;
+    font-size: 0.8125rem;
+}
+
+.struk-premium .struk-total-row.grand {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--premium-primary);
+    padding-top: 0.5rem;
+    margin-top: 0.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.struk-premium .struk-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    color: rgb(148, 163, 184);
+    font-size: 0.75rem;
+}
+
+/* ───────── Scrollbar ───────── */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* ───────── Print Styles (Struk) ───────── */
+@media print {
+    .struk-premium {
+        box-shadow: none;
+        border: none;
+        margin: 0;
+        padding: 1rem;
+        max-width: 100%;
+        background: white;
+        color: black;
+        border-radius: 0;
+    }
+
+    .struk-premium .struk-header h2,
+    .struk-premium .struk-total-row.grand {
+        color: black;
+    }
+
+    .struk-premium .struk-header p,
+    .struk-premium .struk-meta,
+    .struk-premium .struk-footer {
+        color: #666;
+    }
+
+    .struk-premium .struk-header,
+    .struk-premium .struk-meta,
+    .struk-premium .struk-total-section,
+    .struk-premium .struk-footer,
+    .struk-premium .struk-item + .struk-item,
+    .struk-premium .struk-total-row.grand {
+        border-color: #ccc;
+    }
+}
+
+/* ───────── Wave Animation on Dashboard Chart ───────── */
+.fi-wi-stats-overview-stat-chart svg path {
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+    animation: flowWave 4s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+    filter: drop-shadow(0 4px 6px rgba(17, 82, 212, 0.4));
+}
+
+@keyframes flowWave {
+    0% {
+        stroke-dashoffset: 200;
+        transform: translateY(2px) scaleY(0.95);
+    }
+    50% {
+        transform: translateY(-2px) scaleY(1.05);
+    }
+    100% {
+        stroke-dashoffset: 0;
+        transform: translateY(2px) scaleY(0.95);
+    }
+}
+
+
+/* ───────── Product Card Zoom Animation ───────── */
+.product-card-zoom {
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.4s ease,
+                border-color 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+    will-change: transform, box-shadow !important;
+}
+
+/* Shimmer sweep overlay */
+.product-card-zoom::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(
+        120deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.08) 50%,
+        transparent 70%
+    ) !important;
+    transition: left 0.6s ease !important;
+    z-index: 10 !important;
+    pointer-events: none !important;
+    border-radius: inherit !important;
+}
+
+.product-card-zoom:hover::after {
+    left: 100% !important;
+}
+
+.product-card-zoom:hover {
+    transform: scale(1.07) translateY(-20px) !important;
+    box-shadow: 0 0 20px rgba(17, 82, 212, 0.4),
+                0 30px 60px rgba(0, 0, 0, 0.35),
+                0 0 0 2px rgba(17, 82, 212, 0.5) !important;
+    z-index: 50 !important;
+    border-color: #1152d4 !important;
+}
+
+/* ───────── Compact Product Card Checkbox ───────── */
+.product-card-zoom .fi-ta-content-grid-item-checkbox {
+    position: absolute !important;
+    top: 10px !important;
+    left: 10px !important;
+    z-index: 20 !important;
+    background: rgba(16, 22, 34, 0.6) !important;
+    backdrop-filter: blur(4px) !important;
+    border-radius: 4px !important;
+    padding: 2px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* ───────── Compact Product Card Checkbox ───────── */
+.product-card-zoom .fi-ta-content-grid-item-checkbox {
+    position: absolute !important;
+    top: 10px !important;
+    left: 10px !important;
+    z-index: 20 !important;
+    background: rgba(16, 22, 34, 0.6) !important;
+    backdrop-filter: blur(4px) !important;
+    border-radius: 4px !important;
+    padding: 2px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
