@@ -16,11 +16,11 @@ class DatabaseSeeder extends Seeder
     {
         // 1. DEFINISI KATEGORI DENGAN GAMBAR REPRESENTATIF (HD)
         $katsData = [
-            ['nama' => 'Semen & Pasir', 'img' => 'produks/semen_pasir.png'],
-            ['nama' => 'Besi & Baja', 'img' => 'produks/besi_baja.png'],
-            ['nama' => 'Cat & Cairan', 'img' => 'produks/cat_cairan.png'],
-            ['nama' => 'Paku & Hardware', 'img' => 'produks/paku_hardware.png'],
-            ['nama' => 'Plumbing & Pipa', 'img' => 'produks/plumbing_pipa.png'],
+            ['nama' => 'Semen & Pasir', 'img' => 'produks/semen.png'],
+            ['nama' => 'Besi & Baja', 'img' => 'produks/besi_beton.png'],
+            ['nama' => 'Cat & Cairan', 'img' => 'produks/cat_dulux.png'],
+            ['nama' => 'Paku & Hardware', 'img' => 'produks/paku_beton.png'],
+            ['nama' => 'Plumbing & Pipa', 'img' => 'produks/pipa_pvc.png'],
             ['nama' => 'Alat Pertukangan', 'img' => 'https://images.unsplash.com/photo-1581244276891-99577956bc93?q=80&w=800'],
             ['nama' => 'Kelistrikan', 'img' => 'https://images.unsplash.com/photo-1558211583-d28f610b15a1?q=80&w=800'],
             ['nama' => 'Lantai & Keramik', 'img' => 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=800'],
