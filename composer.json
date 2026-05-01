@@ -9,15 +9,12 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "ext-intl": "*",
+        "ext-zip": "*",
         "barryvdh/laravel-dompdf": "^3.1",
         "filament/filament": "3.3",
         "laravel/framework": "^11.0",
-        "laravel/tinker": "^2.9""require": {
-            "php": "^8.2",
-            "ext-intl": "*",
-            "ext-zip": "*",
-    ... (isi lainnya jangan dihapus)
-        },
+        "laravel/tinker": "^2.9"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
