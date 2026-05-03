@@ -32,31 +32,22 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->passwordReset()
 
-            ->brandName('Toko Bangunan Hadi')
-            ->brandLogo(asset('images/logo.png'))
-            ->brandLogoHeight('3rem')
-            ->favicon(asset('images/logo.png'))
+            ->brandLogo(fn () => view('filament.admin.brand'))
 
             ->font('Poppins')
 
             ->darkMode(true, true)
 
             ->colors([
-                'primary' => Color::Emerald,
-                'gray' => [
-                    50  => '#f6f6f8',
-                    100 => '#e2e4e8',
-                    200 => '#c8cbd2',
-                    300 => '#a4a9b4',
-                    400 => '#7c8291',
-                    500 => '#636a79',
-                    600 => '#4e5462',
-                    700 => '#3b4050',
-                    800 => '#1e2433',
-                    900 => '#151b28',
-                    950 => '#101622',
-                ],
+                'primary' => Color::Blue,
+                'emerald' => Color::Emerald,
+                'gray' => Color::Slate,
             ])
+
+            ->renderHook(
+                PanelsRenderHook::SIDEBAR_NAV_START,
+                fn (): string => view('filament.admin.sidebar-profile'),
+            )
 
             ->renderHook(
                 PanelsRenderHook::HEAD_END,

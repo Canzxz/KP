@@ -140,21 +140,62 @@ class ProdukResource extends Resource
                 
                 /* Jarak antar kartu */
                 .fi-ta-content-grid { gap: 1.5rem !important; margin-top: 1rem !important; } 
+
+                /* Menata Search & Filter di samping Sort */
+                .fi-ta-header-toolbar { 
+                    display: flex !important; 
+                    flex-direction: row !important; 
+                    align-items: center !important; 
+                    gap: 1rem !important;
+                    justify-content: flex-start !important;
+                }
+                .fi-ta-header-toolbar > div { margin: 0 !important; }
+                .fi-ta-search-field { max-width: 250px !important; }
+
+                /* Styling Tombol New Produk Premium */
+                .fi-ac-btn-action, .fi-header-actions button {
+                    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%) !important;
+                    border: none !important;
+                    border-radius: 0.75rem !important;
+                    padding: 0.6rem 1.5rem !important;
+                    font-weight: 800 !important;
+                    text-transform: uppercase !important;
+                    letter-spacing: 0.05em !important;
+                    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.4) !important;
+                    transition: all 0.2s ease !important;
+                }
+                .fi-ac-btn-action:hover, .fi-header-actions button:hover {
+                    transform: translateY(-2px) !important;
+                    box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.5) !important;
+                    filter: brightness(1.1) !important;
+                }
+
+                /* Memindahkan Tombol ke Kiri */
+                .fi-header {
+                    display: flex !important;
+                    flex-direction: row !important;
+                    align-items: center !important;
+                    justify-content: flex-start !important;
+                    gap: 1.5rem !important;
+                }
+                .fi-header-actions {
+                    order: 2 !important;
+                    margin-inline-start: 0 !important;
+                }
+                .fi-header-heading-ctn {
+                    order: 1 !important;
+                }
             </style>'))
             ->columns([
                 Tables\Columns\Layout\Stack::make([
                     // Gambar Terpusat & Lebih Kecil
                     Tables\Columns\ImageColumn::make('gambar')
+                        ->label('Gambar')
                         ->height('120px')
                         ->width('100%')
-                        ->getStateUsing(function ($record) {
-                            $gambar = $record->gambar;
-                            $path = is_array($gambar) ? ($gambar[0] ?? null) : $gambar;
-                            if (!$path) return [];
-                            return str_starts_with($path, 'http') ? [$path] : [asset('storage/' . $path)];
-                        })
+                        ->disk('public')
                         ->extraImgAttributes(['style' => 'object-fit: contain; width: 100%; border-radius: 0.75rem;'])
-                        ->extraAttributes(['class' => 'p-4 pb-0']) // Padding agar gambar tidak mentok dan terlihat di tengah
+                        ->extraAttributes(['class' => 'p-4 pb-0'])
                         ->defaultImageUrl('https://ui-avatars.com/api/?name=Produk&background=1152d4&color=fff&size=512'),
                     
                     Tables\Columns\Layout\Stack::make([

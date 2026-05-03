@@ -7,8 +7,8 @@ use Filament\Widgets\ChartWidget;
 
 class TransaksiChart extends ChartWidget
 {
-    protected static ?string $heading = 'Revenue Overview';
-    protected static ?string $description = 'Performa omzet mingguan';
+    protected static ?string $heading = 'Grafik Omzet (Rupiah)';
+    protected static ?string $description = 'Laporan omzet transaksi mingguan';
     protected static ?int $sort = 2;
     protected static ?string $pollingInterval = null;
     protected int | string | array $columnSpan = 'full';
@@ -46,7 +46,7 @@ class TransaksiChart extends ChartWidget
                 ],
             ],
             'labels' => $data->map(function ($item) {
-                return 'Mg ' . $item->minggu;
+                return 'Minggu ke-' . $item->minggu;
             }),
         ];
     }

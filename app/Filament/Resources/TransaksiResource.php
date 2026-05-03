@@ -58,137 +58,136 @@ class TransaksiResource extends Resource
                             ->required(),
 
                         Repeater::make('items')
-                            ->label('Keranjang')
-                            ->required()
-                            ->minItems(1)
-                            ->columns(1)
+                            ->label('Keranjang Belanja')
+                            ->relationship()
                             ->schema([
+                                Grid::make(4)
+                                    ->schema([
+                                        Select::make('id_produk')
+                                            ->label('Pilih Produk')
+                                            ->columnSpan(2)
+                                            ->options(fn () => Produk::where('stok', '>', 0)->pluck('nama_produk', 'id_produk'))
+                                            ->searchable()
+                                            ->preload()
+                                            ->required()
+                                            ->reactive()
+                                            ->live()
+                                            ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                                                $produk = Produk::find($state);
+                                                if (!$produk) return;
+                                                $set('harga', (float) $produk->harga);
+                                                $set('qty', 1);
+                                                $set('subtotal', (float) $produk->harga);
+                                                
+                                                $items = $get('../../items') ?? [];
+                                                $total = collect($items)->sum(fn ($item) => (float) ($item['subtotal'] ?? 0));
+                                                $set('../../total', $total);
+                                            }),
 
-        Select::make('id_produk')
-            ->label('Produk')
-            ->options(fn () =>
-            Produk::where('stok', '>', 0)
-            ->pluck('nama_produk', 'id_produk'))
-            ->searchable()
-            ->preload()
-            ->required()
-            ->reactive()
-            ->live()
-            ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                                        TextInput::make('qty')
+                                            ->label('Jumlah')
+                                            ->numeric()
+                                            ->default(1)
+                                            ->minValue(1)
+                                            ->columnSpan(1)
+                                            ->reactive()
+                                            ->live(debounce: 200)
+                                            ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                                                $harga = (float) $get('harga');
+                                                $qty   = max((int) $state, 1);
+                                                $set('subtotal', $qty * $harga);
+                                                
+                                                $items = $get('../../items') ?? [];
+                                                $total = collect($items)->sum(fn ($item) => (float) ($item['subtotal'] ?? 0));
+                                                $set('../../total', $total);
+                                            }),
 
-                $produk = Produk::find($state);
-                if (! $produk) return;
-
-                $set('harga', (float) $produk->harga);
-                $set('qty', 1);
-                $set('subtotal', (float) $produk->harga);
-
-                // 🔥 HITUNG TOTAL
-                $items = $get('../../items') ?? [];
-
-                $total = collect($items)->sum(
-                    fn ($item) => (float) ($item['subtotal'] ?? 0)
-                );
-
-                $set('../../total', $total);
-            }),
-
-        TextInput::make('qty')
-            ->label('Qty')
-            ->numeric()
-            ->default(1)
-            ->minValue(1)
-            ->helperText(fn (callable $get) =>
-                $get('stok') <= 0
-                    ? 'Stok habis'
-                    : 'Stok tersedia: ' . $get('stok'))
-    ->reactive()
-            ->live(debounce: 200)
-            ->afterStateUpdated(function ($state, callable $set, callable $get) {
-
-                $harga = (float) $get('harga');
-                $qty   = max((int) $state, 1);
-
-                $set('subtotal', $qty * $harga);
-
-                // 🔥 HITUNG TOTAL
-                $items = $get('../../items') ?? [];
-
-                $total = collect($items)->sum(
-                    fn ($item) => (float) ($item['subtotal'] ?? 0)
-                );
-
-                $set('../../total', $total);
-            }),
-
-        TextInput::make('harga')
-            ->numeric()
-            ->disabled()
-            ->dehydrated()
-            ->prefix('Rp'),
-
-        TextInput::make('subtotal')
-            ->numeric()
-            ->disabled()
-            ->dehydrated()
-            ->prefix('Rp'),
-    ]),
+                                        TextInput::make('subtotal')
+                                            ->label('Subtotal')
+                                            ->columnSpan(1)
+                                            ->numeric()
+                                            ->disabled()
+                                            ->dehydrated()
+                                            ->prefix('Rp')
+                                            ->extraInputAttributes(['class' => 'font-bold text-blue-500']),
+                                    ]),
+                                
+                                TextInput::make('harga')
+                                    ->hidden()
+                                    ->dehydrated(),
+                            ])
+                            ->itemLabel(fn (array $state): ?string => Produk::find($state['id_produk'] ?? null)?->nama_produk ?? 'Pilih Produk')
+                            ->collapsible()
+                            ->collapsed(false)
+                            ->cloneable()
+                            ->addActionLabel('Tambah Produk Lain')
+                            ->columns(1),
 
                     ]),
 
                 /* ======================
                  * KANAN - PEMBAYARAN
                  * ====================== */
+                /* ======================
+                 * KANAN - PEMBAYARAN
+                 * ====================== */
                 Section::make('Pembayaran')
-    ->columnSpan(5)
-    ->schema([
+                    ->description('Penyelesaian transaksi & pembayaran')
+                    ->icon('heroicon-m-credit-card')
+                    ->columnSpan(5)
+                    ->schema([
 
-        Select::make('metode_pembayaran')
-            ->label('Metode Pembayaran')
-            ->options([
-                'Cash' => 'Tunai (Cash)',
-                'Transfer Bank' => 'Transfer Bank',
-                'QRIS' => 'QRIS',
-                'Kartu Kredit/Debit' => 'Kartu Kredit/Debit',
-            ])
-            ->default('Cash')
-            ->required(),
+                        Select::make('metode_pembayaran')
+                            ->label('Metode Pembayaran')
+                            ->options([
+                                'Cash' => 'Tunai (Cash)',
+                                'Transfer Bank' => 'Transfer Bank',
+                                'QRIS' => 'QRIS',
+                                'Kartu Kredit/Debit' => 'Kartu Kredit/Debit',
+                            ])
+                            ->default('Cash')
+                            ->required()
+                            ->native(false),
 
-        TextInput::make('total')
-            ->label('TOTAL')
-            ->numeric()
-            ->disabled()
-            ->dehydrated()
-            ->prefix('Rp')
-            ->live()
-            ->extraAttributes([
-                'class' => 'text-3xl font-bold text-green-600',
-            ]),
+                        TextInput::make('total')
+                            ->label('Total Belanja')
+                            ->numeric()
+                            ->disabled()
+                            ->dehydrated()
+                            ->prefix('Rp')
+                            ->live()
+                            ->extraAttributes([
+                                'class' => 'text-3xl font-black text-emerald-500 bg-emerald-500/5 py-4 rounded-xl border border-emerald-500/10 text-center',
+                            ]),
 
-        TextInput::make('bayar')
-            ->label('Bayar')
-            ->numeric()
-            ->required()
-            ->minValue(fn ($get) => $get('total'))
-            ->live(debounce: 200)
-            ->prefix('Rp')
-            ->afterStateUpdated(function ($state, callable $set, callable $get) {
-                $total = (float) $get('total');
-                $bayar = (float) $state;
+                        Grid::make(2)->schema([
+                            TextInput::make('bayar')
+                                ->label('Nominal Bayar')
+                                ->numeric()
+                                ->required()
+                                ->placeholder('0')
+                                ->minValue(fn ($get) => $get('total'))
+                                ->live(debounce: 300)
+                                ->prefix('Rp')
+                                ->extraInputAttributes(['class' => 'text-xl font-bold text-blue-500'])
+                                ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                                    $total = (float) $get('total');
+                                    $bayar = (float) $state;
+                                    $set('kembalian', max($bayar - $total, 0));
+                                }),
 
-                $set('kembalian', max($bayar - $total, 0));
-            }),
-
-        TextInput::make('kembalian')
-            ->label('Kembalian')
-            ->numeric()
-            ->disabled()
-            ->dehydrated()
-            ->prefix('Rp')
-            ->extraAttributes([
-                'class' => 'text-2xl font-semibold text-blue-600',
-            ]),
-    ]),
+                            TextInput::make('kembalian')
+                                ->label('Kembalian')
+                                ->numeric()
+                                ->disabled()
+                                ->dehydrated()
+                                ->prefix('Rp')
+                                ->placeholder('0')
+                                ->extraAttributes([
+                                    'class' => 'text-xl font-bold text-slate-400 bg-slate-500/5 rounded-xl border border-slate-500/10',
+                                ]),
+                        ]),
+                    ]),
 
             ]),
         ]);
