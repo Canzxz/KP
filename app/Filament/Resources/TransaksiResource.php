@@ -39,13 +39,12 @@ class TransaksiResource extends Resource
     {
         return $form->schema([
 
-            Grid::make(12)->schema([
+            Grid::make(1)->schema([
 
                 /* ======================
-                 * KIRI - KERANJANG
+                 * ATAS - KERANJANG
                  * ====================== */
                 Section::make('Transaksi')
-                    ->columnSpan(7)
                     ->schema([
 
                         TextInput::make('kode_transaksi')
@@ -126,15 +125,11 @@ class TransaksiResource extends Resource
                     ]),
 
                 /* ======================
-                 * KANAN - PEMBAYARAN
-                 * ====================== */
-                /* ======================
-                 * KANAN - PEMBAYARAN
+                 * BAWAH - PEMBAYARAN
                  * ====================== */
                 Section::make('Pembayaran')
                     ->description('Penyelesaian transaksi & pembayaran')
                     ->icon('heroicon-m-credit-card')
-                    ->columnSpan(5)
                     ->schema([
 
                         Select::make('metode_pembayaran')

@@ -9,7 +9,7 @@ class RecentSalesWidget extends Widget
 {
     protected static string $view = 'filament.widgets.recent-sales-widget';
 
-    protected int | string | array $columnSpan = 1;
+    protected int | string | array $columnSpan = 5;
 
     protected static ?int $sort = 3;
 
@@ -17,7 +17,7 @@ class RecentSalesWidget extends Widget
     {
         return Transaksi::with(['kasir', 'items.produk'])
             ->latest()
-            ->take(5)
+            ->take(4)
             ->get();
     }
 }

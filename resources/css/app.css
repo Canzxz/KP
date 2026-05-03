@@ -91,14 +91,16 @@ body {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
 
-/* LOGIN PAGE BACKGROUND (Samar-samar Toko Bangunan) */
-.fi-simple-page {
+/* LOGIN PAGE BACKGROUND (Restored Original login-bg.png) */
+.fi-simple-layout,
+.fi-simple-page,
+body.fi-body.fi-simple-page {
     background-image: 
-        linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.95)), 
-        url('https://images.unsplash.com/photo-1517646281694-22d6144e3a96?q=80&w=2070&auto=format&fit=crop'); 
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+        linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.6)), 
+        url('/images/login-bg.png') !important; 
+    background-size: cover !important;
+    background-position: center !important;
+    background-attachment: fixed !important;
 }
 
 /* Glassmorphism untuk Kotak Login */

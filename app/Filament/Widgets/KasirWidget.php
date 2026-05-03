@@ -16,9 +16,9 @@ class KasirWidget extends Widget
 {
     protected static string $view = 'filament.widgets.kasir-widget';
 
-    protected static ?int $sort = 0;
+    protected static ?int $sort = 1;
 
-    protected int | string | array $columnSpan = 'full';
+    protected int | string | array $columnSpan = 7;
 
 }
 

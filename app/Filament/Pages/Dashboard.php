@@ -4,6 +4,7 @@ namespace App\Filament\Pages;
 
 use App\Filament\Widgets\DashboardStatsOverview;
 use App\Filament\Widgets\InventoryStatusWidget;
+use App\Filament\Widgets\KasirWidget;
 use App\Filament\Widgets\RecentSalesWidget;
 use App\Filament\Widgets\TransaksiChart;
 use Filament\Pages\Dashboard as BaseDashboard;
@@ -27,19 +28,16 @@ class Dashboard extends BaseDashboard
     public function getWidgets(): array
     {
         return [
-            DashboardStatsOverview::class,
-            TransaksiChart::class,
-            RecentSalesWidget::class,
-            InventoryStatusWidget::class,
+            DashboardStatsOverview::class, // sort 0 - full width di atas
+            KasirWidget::class,            // sort 1 - kolom kiri (7/12)
+            TransaksiChart::class,         // sort 2 - kolom kanan (5/12)
+            RecentSalesWidget::class,      // sort 3 - kolom kanan (5/12)
+            InventoryStatusWidget::class,  // sort 4 - kolom kanan (5/12)
         ];
     }
 
     public function getColumns(): int | string | array
     {
-        return [
-            'sm' => 1,
-            'md' => 3,
-            'xl' => 3,
-        ];
+        return 1; // Layout dikendalikan oleh custom blade view
     }
 }

@@ -11,7 +11,8 @@ class TransaksiChart extends ChartWidget
     protected static ?string $description = 'Laporan omzet transaksi mingguan';
     protected static ?int $sort = 2;
     protected static ?string $pollingInterval = null;
-    protected int | string | array $columnSpan = 'full';
+    protected static ?string $maxHeight = '240px';
+    protected int | string | array $columnSpan = 5;
 
     protected function getType(): string
     {
