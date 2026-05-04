@@ -17,10 +17,40 @@ use Filament\Support\Enums\MaxWidth;
 class CreateTransaksi extends CreateRecord
 {
     protected static string $resource = TransaksiResource::class;
+    protected static bool $canCreateAnother = false;
 
     public function getMaxContentWidth(): MaxWidth
     {
         return MaxWidth::Full;
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return url('/admin');
+    }
+
+    public function getHeading(): string|\Illuminate\Contracts\Support\Htmlable
+    {
+        return '';
+    }
+
+    public function getBreadcrumbs(): array
+    {
+        return [];
+    }
+
+    protected function getCancelFormAction(): \Filament\Actions\Action
+    {
+        return \Filament\Actions\Action::make('cancel')
+            ->label(__('filament-panels::resources/pages/create-record.form.actions.cancel.label'))
+            ->color('gray')
+            ->action(function () {
+                $oldKode = $this->data['kode_transaksi'] ?? null;
+                $this->form->fill();
+                if ($oldKode) {
+                    $this->data['kode_transaksi'] = $oldKode;
+                }
+            });
     }
 
     protected function handleRecordCreation(array $data): Model
@@ -35,7 +65,8 @@ class CreateTransaksi extends CreateRecord
             // ===============================
             // AMBIL ITEM DARI FORM
             // ===============================
-            $items = $this->form->getState()['items'] ?? [];
+            $items = $data['items'] ?? [];
+            unset($data['items']);
 
             if (empty($items)) {
                 Notification::make()

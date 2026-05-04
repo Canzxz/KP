@@ -36,7 +36,7 @@ class AdminPanelProvider extends PanelProvider
 
             ->font('Poppins')
 
-            ->darkMode(true, true)
+            ->darkMode(true)
 
             ->colors([
                 'primary' => Color::Blue,
@@ -50,100 +50,177 @@ class AdminPanelProvider extends PanelProvider
             )
 
             ->renderHook(
+                \Filament\View\PanelsRenderHook::HEAD_START,
+                fn (): string => \Illuminate\Support\Facades\Blade::render('
+                    <script>
+                        (function() {
+                            try {
+                                const theme = localStorage.getItem("theme") || "dark";
+                                if (theme === "dark") {
+                                    document.documentElement.classList.add("dark");
+                                } else {
+                                    document.documentElement.classList.remove("dark");
+                                }
+                            } catch (e) {}
+                        })();
+                    </script>
+                ')
+            )
+
+            ->renderHook(
                 \Filament\View\PanelsRenderHook::HEAD_END,
                 fn (): string => \Illuminate\Support\Facades\Blade::render('
                     <link rel="preconnect" href="https://fonts.googleapis.com">
                     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
                     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+                    <style>
+                        /* Consistently handle backgrounds and sidebars in PHP hook to bypass cache */
+                        html:not(.dark) body, 
+                        html:not(.dark) .fi-main { background-color: #e2e8f0 !important; }
+                        html:not(.dark) .fi-sidebar { background-color: #f8fafc !important; }
+                        
+                        /* Fix Table/Card/Stats Visibility */
+                        html:not(.dark) .fi-ta-ctn,
+                        html:not(.dark) .fi-section,
+                        html:not(.dark) .fi-wi-stats-overview-stat {
+                            background-color: #ffffff !important;
+                            color: #1e293b !important;
+                        }
+                        
+                        html:not(.dark) .fi-wi-stats-overview-stat * {
+                            color: #1e293b !important;
+                        }
+
+                        html:not(.dark) .fi-ta-row,
+                        html:not(.dark) tr,
+                        html:not(.dark) td {
+                            background-color: #ffffff !important;
+                            color: #1e293b !important;
+                        }
+
+                        /* Fix Page Titles Visibility */
+                        html:not(.dark) .fi-header-heading {
+                            color: #111827 !important; 
+                            opacity: 1 !important;
+                        }
+
+                        html.dark body,
+                        html.dark .fi-main { background-color: #0f172a !important; }
+                        html.dark .fi-sidebar { background-color: #111c2e !important; }
+                        html.dark .fi-wi-stats-overview-stat { background-color: #1e293b !important; }
+                    </style>
                     @vite("resources/css/app.css")
                 ')
             )
 
             ->renderHook(
-                PanelsRenderHook::AUTH_LOGIN_FORM_BEFORE,
-                fn (): string => Blade::render('
+                PanelsRenderHook::HEAD_END,
+                fn (): string => str_contains(request()->url(), 'login') ? Blade::render('
                     <style>
-                        /* Background gambar di seluruh layar */
-                        html, body {
-                            background-image: linear-gradient(rgba(10,15,30,0.75), rgba(10,15,30,0.75)), url("/images/login-bg.png") !important;
+                        /* RESET & BASE */
+                        body {
+                            background-image: linear-gradient(rgba(10,15,30,0.85), rgba(10,15,30,0.85)), url("/images/login-bg.png") !important;
                             background-size: cover !important;
                             background-position: center !important;
                             background-attachment: fixed !important;
+                            background-color: #050a15 !important;
                         }
 
-                        /* Elemen luar HARUS transparan agar background terlihat */
-                        .fi-simple-layout,
-                        .fi-simple-main-ctn {
+                        /* HIDE FILAMENT DEFAULT BACKGROUNDS */
+                        .fi-simple-layout, .fi-simple-main-ctn, .fi-simple-main > div {
                             background: transparent !important;
-                            background-image: none !important;
                             background-color: transparent !important;
                         }
 
-                        /* Hanya kotak form yang solid */
-                        .fi-simple-main,
-                        section.fi-simple-main,
-                        .fi-simple-main > div,
-                        .fi-simple-main > section,
-                        .fi-simple-main > form,
-                        .fi-simple-main .rounded-xl,
-                        .fi-simple-main [class*="dark:bg-gray"] {
-                            background-color: #0d1526 !important;
-                            background-image: none !important;
-                        }
+                        /* THE CARD - Kedalaman & Warna */
                         .fi-simple-main {
-                            border: 1px solid rgba(59,130,246,0.2) !important;
-                            border-radius: 1.25rem !important;
-                            box-shadow: 0 40px 80px -20px rgba(0,0,0,0.9), 0 0 50px -10px rgba(59,130,246,0.1) !important;
-                            overflow: hidden !important;
+                            background-color: #0d1526 !important; /* Biru Gelap sesuai foto */
+                            border: 1px solid rgba(59, 130, 246, 0.4) !important;
+                            border-radius: 1.5rem !important;
+                            box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.8) !important;
+                            padding: 2.5rem !important;
+                            max-width: 460px !important;
                         }
-                        .fi-fo-field-wrp label {
-                            font-size: 0.78rem !important;
-                            font-weight: 600 !important;
-                            text-transform: uppercase !important;
-                            letter-spacing: 0.08em !important;
+
+                        /* TEXT & LABELS - Paksa Putih */
+                        .fi-simple-header-heading, 
+                        .fi-fo-field-wrp label, 
+                        [class*="fi-logo"],
+                        .fi-simple-main *,
+                        .fi-simple-main span,
+                        .fi-simple-main p {
+                            color: #ffffff !important;
                         }
-                        /* Tombol Sign In - multi-selector agar pasti terkena */
-                        .fi-simple-main button[type="submit"],
-                        .fi-simple-main .fi-btn,
-                        .fi-simple-main [wire\:click*="authenticate"],
-                        .fi-simple-main form button {
-                            width: 100% !important;
-                            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
-                            color: white !important;
-                            border: none !important;
-                            border-radius: 0.625rem !important;
-                            padding: 0.75rem 1.5rem !important;
-                            font-size: 0.95rem !important;
+
+                        /* LOGO & BRAND */
+                        [class*="fi-logo"] {
+                            font-size: 1.5rem !important;
+                            font-weight: 900 !important;
+                            letter-spacing: -0.03em !important;
+                        }
+
+                        /* SIGN IN TITLE */
+                        .fi-simple-header-heading {
+                            font-size: 2rem !important;
+                            margin-top: 1rem !important;
+                            margin-bottom: 2rem !important;
+                            font-weight: 800 !important;
+                            text-align: center !important;
+                        }
+
+                        /* FORM LABELS */
+                        .fi-fo-field-wrp label span {
+                            color: #ffffff !important;
+                            font-size: 0.85rem !important;
                             font-weight: 700 !important;
-                            letter-spacing: 0.04em !important;
-                            cursor: pointer !important;
-                            box-shadow: 0 4px 20px -4px rgba(37, 99, 235, 0.6) !important;
-                            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                            text-transform: uppercase !important;
                         }
-                        .fi-simple-main button[type="submit"]:hover,
-                        .fi-simple-main .fi-btn:hover,
-                        .fi-simple-main form button:hover {
-                            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
-                            transform: translateY(-2px) !important;
-                            box-shadow: 0 12px 28px -6px rgba(37, 99, 235, 0.7), 0 0 20px -5px rgba(96, 165, 250, 0.4) !important;
+
+                        /* INPUT FIELDS - Tanpa Efek Bersinar */
+                        .fi-input-wrp {
+                            background-color: rgba(0, 0, 0, 0.3) !important;
+                            border: 1px solid rgba(255, 255, 255, 0.1) !important; /* Border tipis samar */
+                            border-radius: 0.75rem !important;
                         }
-                        .fi-simple-main button[type="submit"]:active,
-                        .fi-simple-main form button:active {
-                            transform: translateY(0) scale(0.99) !important;
-                            box-shadow: 0 4px 10px -3px rgba(37, 99, 235, 0.4) !important;
+                        .fi-input-wrp:focus-within {
+                            border-color: rgba(59, 130, 246, 0.5) !important;
+                            box-shadow: none !important;
+                        }
+                        .fi-input-wrp input {
+                            color: white !important;
+                            font-weight: 500 !important;
+                        }
+
+                        /* FORGOT PASSWORD */
+                        .fi-link {
+                            color: #94a3b8 !important; /* Warna slate yang lebih tenang */
+                            font-weight: 600 !important;
+                        }
+
+                        /* SIGN IN BUTTON */
+                        .fi-simple-main button[type="submit"] {
+                            margin-top: 1.5rem !important;
+                            background: #1e293b !important;
+                            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                            color: white !important;
+                            border-radius: 0.75rem !important;
+                            font-weight: 800 !important;
+                            padding: 0.85rem !important;
+                            text-transform: capitalize !important;
+                            box-shadow: none !important;
+                            transition: all 0.2s !important;
+                        }
+                        .fi-simple-main button[type="submit"]:hover {
+                            background: #334155 !important;
+                        }
+
+                        /* CHECKBOX */
+                        .fi-checkbox {
+                            border-color: rgba(255,255,255,0.2) !important;
+                            background-color: rgba(255,255,255,0.05) !important;
                         }
                     </style>
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function () {
-                            const main = document.querySelector(".fi-simple-main");
-                            if (!main) return;
-                            main.querySelectorAll("*").forEach(function(el) {
-                                el.style.setProperty("background-color", "#0d1526", "important");
-                                el.style.setProperty("background-image", "none", "important");
-                            });
-                        });
-                    </script>
-                ')
+                ') : ''
             )
 
 
@@ -166,7 +243,11 @@ class AdminPanelProvider extends PanelProvider
                 for: 'App\\Filament\\Widgets'
             )
 
-            ->widgets([])
+            ->widgets([
+                \App\Filament\Widgets\DashboardStatsOverview::class,
+                \App\Filament\Widgets\KasirWidget::class,
+                \App\Filament\Widgets\TransaksiChart::class,
+            ])
 
             ->navigationGroups([
                 'Menu',

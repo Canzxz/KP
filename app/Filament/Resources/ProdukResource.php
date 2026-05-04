@@ -128,14 +128,21 @@ class ProdukResource extends Resource
                     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
                     border-radius: 1.25rem !important;
                     overflow: hidden !important;
-                    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+                    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+                    background: white !important;
+                }
+                .dark .fi-ta-content-grid > div > div {
                     background: rgba(30, 36, 51, 0.4) !important;
+                    border: 1px solid rgba(255, 255, 255, 0.05) !important;
                     backdrop-filter: blur(10px) !important;
                 }
                 .fi-ta-content-grid > div > div:hover {
                     transform: translateY(-5px) !important;
+                    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1) !important;
+                    border-color: rgba(59, 130, 246, 0.3) !important;
+                }
+                .dark .fi-ta-content-grid > div > div:hover {
                     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2) !important;
-                    border-color: rgba(17, 82, 212, 0.3) !important;
                 }
                 
                 /* Jarak antar kartu */
@@ -154,20 +161,20 @@ class ProdukResource extends Resource
 
                 /* Styling Tombol New Produk Premium */
                 .fi-ac-btn-action, .fi-header-actions button {
-                    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%) !important;
+                    background: #2563eb !important; /* Blue 600 - Solid & Elegant */
                     border: none !important;
                     border-radius: 0.75rem !important;
                     padding: 0.6rem 1.5rem !important;
                     font-weight: 800 !important;
                     text-transform: uppercase !important;
                     letter-spacing: 0.05em !important;
-                    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.4) !important;
+                    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1) !important;
                     transition: all 0.2s ease !important;
                 }
                 .fi-ac-btn-action:hover, .fi-header-actions button:hover {
-                    transform: translateY(-2px) !important;
-                    box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.5) !important;
-                    filter: brightness(1.1) !important;
+                    transform: translateY(-1px) !important;
+                    background: #1d4ed8 !important; /* Darker blue on hover */
+                    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
                 }
 
                 /* Memindahkan Tombol ke Kiri */
@@ -211,7 +218,6 @@ class ProdukResource extends Resource
                         Tables\Columns\TextColumn::make('nama_produk')
                             ->weight('bold')
                             ->size('sm')
-                            ->color('white')
                             ->alignment('center')
                             ->searchable()
                             ->limit(35),
@@ -248,6 +254,9 @@ class ProdukResource extends Resource
             ->filters([
                 Tables\Filters\SelectFilter::make('kategori')
                     ->relationship('kategori', 'nama_kategori')
+                    ->multiple()
+                    ->searchable()
+                    ->preload()
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
@@ -260,10 +269,10 @@ class ProdukResource extends Resource
                             Forms\Components\Select::make('jenis')
                                 ->label('Jenis Penyesuaian')
                                 ->options([
-                                    'masuk' => 'Masuk (Restock)',
-                                    'keluar' => 'Keluar (Rusak/Hilang)',
+                                    'restok' => 'Restok',
+                                    'hilang/rusak' => 'Hilang/Rusak',
                                 ])
-                                ->default('masuk')
+                                ->default('restok')
                                 ->required(),
                             Forms\Components\TextInput::make('jumlah')
                                 ->label('Jumlah')
@@ -277,7 +286,7 @@ class ProdukResource extends Resource
                         ])
                         ->action(function (Produk $record, array $data): void {
                             $jumlah = (int) $data['jumlah'];
-                            if ($data['jenis'] === 'keluar') {
+                            if ($data['jenis'] === 'hilang/rusak') {
                                 if ($record->stok < $jumlah) {
                                     \Filament\Notifications\Notification::make()
                                         ->title('Gagal: Stok Kurang')
@@ -292,7 +301,7 @@ class ProdukResource extends Resource
 
                             \App\Models\RiwayatStok::create([
                                 'produk_id' => $record->id_produk,
-                                'jenis' => $data['jenis'],
+                                'jenis' => $data['jenis'] === 'restok' ? 'masuk' : 'keluar',
                                 'jumlah' => $jumlah,
                                 'keterangan' => $data['keterangan'] ?? 'Manual update',
                                 'user_id' => auth()->id(),

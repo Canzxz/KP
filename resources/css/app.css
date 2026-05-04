@@ -2,116 +2,121 @@
 
 :root {
     --primary-blue: #3b82f6;
-    --primary-emerald: #10b981;
 }
 
+/* Base Body Styling */
 body {
-    background-color: #0f172a !important; /* Warna Slate yang sedikit lebih terang & elegan */
     font-family: 'Plus Jakarta Sans', sans-serif !important;
     letter-spacing: -0.01em;
     overflow-x: hidden;
 }
 
-/* Sidebar Styling */
-.fi-sidebar {
-    background-color: #111c2e !important; /* Warna biru indigo gelap yang lebih terang */
-    border-right: 1px solid rgba(255, 255, 255, 0.03) !important;
+/* =========================================
+   1. LIGHT MODE (MUTED ELEGANT SLATE)
+   ========================================= */
+
+/* Background Utama */
+html:not(.dark) body, 
+html:not(.dark) .fi-main,
+html:not(.dark) .fi-topbar { 
+    background-color: #e2e8f0 !important; 
 }
 
-/* Konten tetap di tengah */
-.fi-main-ctn {
-    max-width: 1400px !important;
-    margin: 0 auto !important;
+/* Sidebar */
+html:not(.dark) .fi-sidebar,
+html:not(.dark) .fi-sidebar-nav { 
+    background-color: #f8fafc !important; 
+    border-right: 1px solid #cbd5e1 !important; 
 }
 
-/* Rapatkan Main Container */
-.fi-main {
-    padding-top: 0.5rem !important;
+/* CARDS & TABLES (Comprehensive) */
+html:not(.dark) .fi-section, 
+html:not(.dark) .fi-ta-ctn,
+html:not(.dark) .fi-ta-content,
+html:not(.dark) .fi-ta-header,
+html:not(.dark) .fi-ta-header-toolbar,
+html:not(.dark) .fi-ta-footer,
+html:not(.dark) .fi-ta-pagination,
+html:not(.dark) .fi-card,
+html:not(.dark) .fi-wi-stats-overview-stat {
+    background-color: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #1e293b !important;
 }
 
-/* SOLID DARK CARDS */
-.fi-section, 
-.fi-ta-ctn, 
-.fi-wi-stats-overview-stat {
-    background-color: #0f172a !important;
-    border: 1px solid rgba(255, 255, 255, 0.04) !important;
-    border-radius: 1.5rem !important;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+/* Table Rows & Headers */
+html:not(.dark) thead,
+html:not(.dark) thead tr,
+html:not(.dark) thead th {
+    background-color: #f1f5f9 !important;
+    color: #1e293b !important;
 }
 
-/* Minimalist Top Area */
-.fi-header, 
-.fi-ta-header-toolbar, 
-.fi-ta-header-description {
-    background: transparent !important;
-    backdrop-filter: none !important;
-    box-shadow: none !important;
-    border: none !important;
-    margin: 0 !important;
+html:not(.dark) .fi-ta-row,
+html:not(.dark) tr,
+html:not(.dark) td {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #f1f5f9 !important;
 }
 
-.fi-header {
-    padding: 1.5rem 1.5rem 0 !important;
+/* Global Font Colors for Light Mode */
+html:not(.dark) .fi-header-heading,
+html:not(.dark) .fi-section-header-heading,
+html:not(.dark) .fi-ta-text,
+html:not(.dark) .fi-ta-cell-content,
+html:not(.dark) .fi-ta-header-heading,
+html:not(.dark) .fi-fo-label,
+html:not(.dark) .fi-ta-header-toolbar *,
+html:not(.dark) .fi-ta-pagination *,
+html:not(.dark) .fi-ta-footer *,
+html:not(.dark) span:not(.role-text) {
+    color: #1e293b !important;
 }
 
-.fi-header-heading {
-    font-size: 2rem !important;
-    font-weight: 800 !important;
-    color: white !important;
-    margin-top: -0.4rem !important;
-    line-height: 1 !important;
+/* Secondary Text */
+html:not(.dark) .fi-breadcrumbs-item-label,
+html:not(.dark) .fi-ta-header-description {
+    color: #64748b !important;
 }
 
-.fi-breadcrumbs-item-label {
-    font-size: 0.6rem !important;
-    font-weight: 700 !important;
-    color: #475569 !important;
+/* =========================================
+   2. DARK MODE (DEEP OCEAN)
+   ========================================= */
+
+html.dark body,
+html.dark .fi-main { 
+    background-color: #0f172a !important; 
 }
 
-.fi-ta-header-toolbar {
-    padding: 0.5rem 1.25rem !important;
-    margin-top: -0.15rem !important;
+html.dark .fi-sidebar { 
+    background-color: #111c2e !important; 
 }
 
-/* Navigasi Sidebar */
-.fi-sidebar-nav-link {
-    margin: 0.25rem 0.75rem !important;
-    padding: 0.6rem 1rem !important;
-    border-radius: 0.75rem !important;
-    color: #94a3b8 !important;
+/* Cards & Tables in Dark Mode */
+html.dark .fi-section, 
+html.dark .fi-ta-ctn,
+html.dark .fi-ta-content,
+html.dark .fi-ta-header,
+html.dark .fi-ta-footer,
+html.dark .fi-card,
+html.dark .fi-wi-stats-overview-stat {
+    background-color: #1e293b !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
 
-.fi-sidebar-nav-link-active {
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(16, 185, 129, 0.05) 100%) !important;
-    color: var(--primary-blue) !important;
+/* Global Font Colors for Dark Mode */
+html.dark .fi-header-heading,
+html.dark .fi-section-header-heading,
+html.dark .fi-ta-text,
+html.dark .fi-ta-cell-content,
+html.dark .fi-ta-header-heading,
+html.dark .fi-fo-label,
+html.dark span:not(.role-text) {
+    color: #f8fafc !important;
 }
 
-/* Scrollbar Modern */
+/* Scrollbar */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
-
-/* LOGIN PAGE BACKGROUND (Restored Original login-bg.png) */
-.fi-simple-layout,
-.fi-simple-page,
-body.fi-body.fi-simple-page {
-    background-image: 
-        linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.6)), 
-        url('/images/login-bg.png') !important; 
-    background-size: cover !important;
-    background-position: center !important;
-    background-attachment: fixed !important;
-}
-
-/* Glassmorphism untuk Kotak Login */
-.fi-simple-main-ctn {
-    background-color: rgba(30, 41, 59, 0.4) !important;
-    backdrop-filter: blur(12px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    border-radius: 2rem !important;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
-}
-
-.fi-simple-main {
-    background: transparent !important;
-}
+html:not(.dark) ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+html.dark ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }

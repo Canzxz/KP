@@ -8,7 +8,7 @@ use Filament\Widgets\ChartWidget;
 class TransaksiChart extends ChartWidget
 {
     protected static ?string $heading = 'Grafik Omzet (Rupiah)';
-    protected static ?string $description = 'Laporan omzet transaksi mingguan';
+    protected static ?string $description = 'Laporan omzet transaksi bulanan';
     protected static ?int $sort = 2;
     protected static ?string $pollingInterval = null;
     protected static ?string $maxHeight = '240px';
@@ -16,28 +16,34 @@ class TransaksiChart extends ChartWidget
 
     protected function getType(): string
     {
-        return 'bar';
+        return 'line';
     }
 
     protected function getData(): array
     {
         $data = Transaksi::selectRaw('
-                YEAR(created_at) as tahun,
-                WEEK(created_at, 1) as minggu,
+                MONTH(created_at) as bulan,
                 SUM(total) as total
             ')
+            ->whereYear('created_at', now()->year)
             ->whereNotNull('total')
-            ->groupBy('tahun', 'minggu')
-            ->orderBy('tahun')
-            ->orderBy('minggu')
-            ->take(7)
-            ->get();
+            ->groupBy('bulan')
+            ->orderBy('bulan')
+            ->get()
+            ->keyBy('bulan');
+
+        $labels = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        $totals = [];
+
+        foreach (range(1, 12) as $monthNumber) {
+            $totals[] = isset($data[$monthNumber]) ? ((float) $data[$monthNumber]->total) / 1000000 : 0;
+        }
 
         return [
             'datasets' => [
                 [
-                    'label' => 'Omzet Mingguan (Rp)',
-                    'data' => $data->pluck('total')->map(fn ($v) => (float) $v),
+                    'label' => 'Omzet Bulanan (Juta Rp)',
+                    'data' => $totals,
                     'backgroundColor' => 'rgba(17, 82, 212, 0.3)',
                     'borderColor' => '#1152d4',
                     'borderWidth' => 2,
@@ -46,9 +52,7 @@ class TransaksiChart extends ChartWidget
                     'hoverBackgroundColor' => '#1152d4',
                 ],
             ],
-            'labels' => $data->map(function ($item) {
-                return 'Minggu ke-' . $item->minggu;
-            }),
+            'labels' => $labels,
         ];
     }
 
@@ -60,13 +64,6 @@ class TransaksiChart extends ChartWidget
                 'legend' => [
                     'display' => false,
                 ],
-                'tooltip' => [
-                    'callbacks' => [
-                        'label' => 'function(context) {
-                            return "Rp " + context.raw.toLocaleString();
-                        }',
-                    ],
-                ],
             ],
             'scales' => [
                 'y' => [
@@ -75,10 +72,8 @@ class TransaksiChart extends ChartWidget
                         'color' => 'rgba(255, 255, 255, 0.05)',
                     ],
                     'ticks' => [
+                        'stepSize' => 5,
                         'color' => 'rgba(148, 163, 184, 1)',
-                        'callback' => 'function(value) {
-                            return "Rp " + (value / 1000000).toFixed(1) + "M";
-                        }',
                     ],
                 ],
                 'x' => [

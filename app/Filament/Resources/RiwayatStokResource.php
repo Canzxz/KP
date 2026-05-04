@@ -17,10 +17,12 @@ class RiwayatStokResource extends Resource
     protected static ?string $navigationGroup = 'Menu';
     protected static ?string $navigationLabel = 'Riwayat Stok';
     protected static ?int $navigationSort = 3;
+    protected static ?string $modelLabel = 'Riwayat Stok';
+    protected static ?string $pluralModelLabel = 'Riwayat Stok';
 
     public static function canViewAny(): bool
     {
-        return auth()->user()?->role === 'superadmin';
+        return in_array(auth()->user()?->role, ['superadmin', 'kasir']);
     }
 
     // Make this resource read-only from the panel
@@ -45,12 +47,26 @@ class RiwayatStokResource extends Resource
                     ->weight('bold'),
                 Tables\Columns\TextColumn::make('jenis')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'masuk' => 'success',
-                        'keluar' => 'danger',
-                        default => 'gray',
+                    ->color(fn (string $state, $record): string => match (true) {
+                        in_array($state, ['restok', 'masuk']) => 'success',
+                        str_contains(strtolower($record->keterangan), 'penjualan') => 'info',
+                        default => 'danger',
                     })
-                    ->formatStateUsing(fn ($state) => strtoupper($state)),
+                    ->formatStateUsing(function ($state, $record) {
+                        if (in_array($state, ['restok', 'masuk'])) {
+                            return 'Restok';
+                        }
+                        
+                        if (in_array($state, ['terjual', 'keluar'])) {
+                            // Cek keterangan untuk membedakan penjualan vs penyesuaian manual
+                            if (str_contains(strtolower($record->keterangan), 'penjualan')) {
+                                return 'Terjual';
+                            }
+                            return 'Hilang/Rusak';
+                        }
+                        
+                        return 'Hilang/Rusak';
+                    }),
                 Tables\Columns\TextColumn::make('jumlah')
                     ->label('Qty')
                     ->numeric()
@@ -72,8 +88,9 @@ class RiwayatStokResource extends Resource
             ->filters([
                 Tables\Filters\SelectFilter::make('jenis')
                     ->options([
-                        'masuk' => 'Barang Masuk',
-                        'keluar' => 'Barang Keluar',
+                        'terjual' => 'Terjual',
+                        'restok' => 'Restok',
+                        'hilang/rusak' => 'Hilang/Rusak',
                     ]),
             ])
             ->actions([])

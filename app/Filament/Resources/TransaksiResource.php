@@ -22,6 +22,8 @@ class TransaksiResource extends Resource
     protected static ?string $navigationLabel = 'Transaksi';
     protected static ?string $navigationGroup = 'Menu';
     protected static ?string $slug = 'transaksi';
+    protected static ?string $modelLabel = 'Transaksi';
+    protected static ?string $pluralModelLabel = 'Transaksi';
 
 
 
@@ -37,16 +39,17 @@ class TransaksiResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $isKasir = auth()->user()?->role === 'kasir';
+
         return $form->schema([
 
-            Grid::make(1)->schema([
-
+            Grid::make($isKasir ? 12 : 1)->schema([
                 /* ======================
-                 * ATAS - KERANJANG
+                 * KIRI / ATAS - KERANJANG
                  * ====================== */
                 Section::make('Transaksi')
+                    ->columnSpan($isKasir ? 8 : 1)
                     ->schema([
-
                         TextInput::make('kode_transaksi')
                             ->label('Kode Transaksi')
                             ->default(fn () =>
@@ -58,9 +61,8 @@ class TransaksiResource extends Resource
 
                         Repeater::make('items')
                             ->label('Keranjang Belanja')
-                            ->relationship()
                             ->schema([
-                                Grid::make(4)
+                                Grid::make(3)
                                     ->schema([
                                         Select::make('id_produk')
                                             ->label('Pilih Produk')
@@ -100,18 +102,12 @@ class TransaksiResource extends Resource
                                                 $total = collect($items)->sum(fn ($item) => (float) ($item['subtotal'] ?? 0));
                                                 $set('../../total', $total);
                                             }),
-
-                                        TextInput::make('subtotal')
-                                            ->label('Subtotal')
-                                            ->columnSpan(1)
-                                            ->numeric()
-                                            ->disabled()
-                                            ->dehydrated()
-                                            ->prefix('Rp')
-                                            ->extraInputAttributes(['class' => 'font-bold text-blue-500']),
                                     ]),
                                 
                                 TextInput::make('harga')
+                                    ->hidden()
+                                    ->dehydrated(),
+                                TextInput::make('subtotal')
                                     ->hidden()
                                     ->dehydrated(),
                             ])
@@ -121,24 +117,22 @@ class TransaksiResource extends Resource
                             ->cloneable()
                             ->addActionLabel('Tambah Produk Lain')
                             ->columns(1),
-
                     ]),
 
                 /* ======================
-                 * BAWAH - PEMBAYARAN
+                 * KANAN / BAWAH - PEMBAYARAN
                  * ====================== */
                 Section::make('Pembayaran')
+                    ->columnSpan($isKasir ? 4 : 1)
                     ->description('Penyelesaian transaksi & pembayaran')
                     ->icon('heroicon-m-credit-card')
                     ->schema([
-
                         Select::make('metode_pembayaran')
                             ->label('Metode Pembayaran')
                             ->options([
                                 'Cash' => 'Tunai (Cash)',
                                 'Transfer Bank' => 'Transfer Bank',
                                 'QRIS' => 'QRIS',
-                                'Kartu Kredit/Debit' => 'Kartu Kredit/Debit',
                             ])
                             ->default('Cash')
                             ->required()
@@ -155,7 +149,7 @@ class TransaksiResource extends Resource
                                 'class' => 'text-3xl font-black text-emerald-500 bg-emerald-500/5 py-4 rounded-xl border border-emerald-500/10 text-center',
                             ]),
 
-                        Grid::make(2)->schema([
+                        Grid::make(1)->schema([
                             TextInput::make('bayar')
                                 ->label('Nominal Bayar')
                                 ->numeric()
@@ -183,7 +177,6 @@ class TransaksiResource extends Resource
                                 ]),
                         ]),
                     ]),
-
             ]),
         ]);
     }
@@ -203,7 +196,6 @@ class TransaksiResource extends Resource
                         'Cash' => 'success',
                         'Transfer Bank' => 'info',
                         'QRIS' => 'warning',
-                        'Kartu Kredit/Debit' => 'primary',
                         default => 'gray',
                     }),
                 Tables\Columns\TextColumn::make('created_at')

@@ -5,10 +5,11 @@
 
     <div class="flex flex-col xl:flex-row gap-6 items-start mt-2">
         {{-- Kiri: Kasir --}}
-        <div class="w-full xl:w-8/12 flex-shrink-0">
+        <div class="{{ auth()->user()->role === 'kasir' ? 'w-full' : 'w-full xl:w-8/12' }} flex-shrink-0">
             @livewire(\App\Filament\Widgets\KasirWidget::class)
         </div>
 
+        @if(auth()->user()->role !== 'kasir')
         {{-- Kanan: Sidebar Widgets --}}
         <div class="w-full xl:w-4/12 flex flex-col gap-6" id="right-sidebar-widgets">
             <style>
@@ -29,6 +30,7 @@
             @livewire(\App\Filament\Widgets\RecentSalesWidget::class)
             @livewire(\App\Filament\Widgets\InventoryStatusWidget::class)
         </div>
+        @endif
     </div>
 
 
